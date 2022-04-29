@@ -1,4 +1,4 @@
-# flutter_auth_app
+# Flutter Firebase App
 
 A new Flutter project.
 
