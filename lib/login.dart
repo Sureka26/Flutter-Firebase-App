@@ -27,13 +27,13 @@ class Login extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: Color(0xff001d3d),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25.0,
-              vertical: 20.0,
-            ),
-            child: Center(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 25.0,
+                vertical: 20.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -41,14 +41,38 @@ class Login extends StatelessWidget {
                   const Icon(
                     Icons.icecream_rounded,
                     size: 80.0,
-                    color: Colors.white60,
+                    color: Colors.white70,
                   ),
                   const SizedBox(
                     height: 20.0,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Login',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '.',
+                        style: TextStyle(
+                          color: Colors.blue[200],
+                          fontSize: 35.0,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ],
+                  ),
                   const Text(
-                    'We missed you so much!',
+                    'Welcome back, you\'ve been missed!',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
+                      height: 2.5,
                       color: Colors.white,
                       fontSize: 14.0,
                     ),
@@ -66,10 +90,10 @@ class Login extends StatelessWidget {
                       fillColor: Colors.white,
                       filled: true,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),
@@ -86,10 +110,10 @@ class Login extends StatelessWidget {
                       fillColor: Colors.white,
                       filled: true,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),
@@ -111,8 +135,10 @@ class Login extends StatelessWidget {
                       ),
                       child: const Center(
                         child: Text(
-                          'Sign Up',
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          'LOGIN',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -120,14 +146,29 @@ class Login extends StatelessWidget {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  TextButton(
-                    onPressed: () {
-                      toggle();
-                    },
-                    child: const Text(
-                      'Not a Member? Create account now!',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Not a member?',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          toggle();
+                        },
+                        child: const Text(
+                          'Register now!',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
