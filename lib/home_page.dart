@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_auth_app/src/authentication/network/auth_firebase.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -7,7 +8,7 @@ class HomePage extends StatelessWidget {
   var email = FirebaseAuth.instance.currentUser!.email;
 
   void logOutUser() async {
-    await FirebaseAuth.instance.signOut();
+    await AuthFirebase.logoutUser();
   }
 
   @override

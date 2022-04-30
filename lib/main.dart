@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/home_page.dart';
-import 'package:flutter_auth_app/login.dart';
+import 'package:flutter_auth_app/src/utils/screens/loading.dart';
+import 'package:flutter_auth_app/src/authentication/screens/login.dart';
 import 'package:flutter_auth_app/main_page.dart';
-import 'package:flutter_auth_app/sign_up.dart';
+import 'package:flutter_auth_app/src/authentication/screens/sign_up.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -20,9 +21,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: MainPage(),
     );
   }
