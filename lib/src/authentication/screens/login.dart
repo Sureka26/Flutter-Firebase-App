@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth_app/loading.dart';
-import 'package:flutter_auth_app/sign_up.dart';
+import 'package:flutter_auth_app/src/authentication/network/auth_firebase.dart';
+import 'package:flutter_auth_app/src/utils/function_utils.dart';
+import 'package:flutter_auth_app/src/utils/screens/loading.dart';
+import 'package:flutter_auth_app/src/authentication/screens/sign_up.dart';
 
 class Login extends StatefulWidget {
   final VoidCallback toggle;
@@ -25,11 +28,14 @@ class _LoginState extends State<Login> {
     setState(() {
       _isLoading = true;
     });
-    UserCredential user = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim());
-    print('User Email: ${user.user!.email}');
+
+    User? user = await AuthFirebase.loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    if (user == null) {
+      showAuthErrorDialog(context);
+    }
     setState(() {
       _isLoading = false;
     });
@@ -120,6 +126,7 @@ class _LoginState extends State<Login> {
                             },
                             controller: _emailController,
                             textAlign: TextAlign.center,
+                            textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(8.0),
                               hintText: 'Enter email',
@@ -147,14 +154,12 @@ class _LoginState extends State<Login> {
                           TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter an email';
-                              } else if (!(value.contains('@') &&
-                                  value.contains('.com'))) {
-                                return 'Please enter a valid email';
+                                return 'Please enter a password';
+                              } else if (value.length < 6) {
+                                return 'Password enter a strong password';
                               } else {
-                                print('email validated - is Not empty');
+                                return null;
                               }
-                              return null;
                             },
                             controller: _passwordController,
                             textAlign: TextAlign.center,

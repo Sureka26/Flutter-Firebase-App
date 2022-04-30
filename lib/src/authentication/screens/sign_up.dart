@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth_app/loading.dart';
+import 'package:flutter_auth_app/src/authentication/network/auth_firebase.dart';
+import 'package:flutter_auth_app/src/utils/function_utils.dart';
+import 'package:flutter_auth_app/src/utils/screens/loading.dart';
 
 class SignUp extends StatefulWidget {
   final VoidCallback toggle;
@@ -20,10 +22,13 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       _isLoading = true;
     });
-    UserCredential user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: _emailController.text, password: _passwordController.text);
-    print(user.user!.email);
+    User? user = await AuthFirebase.createUser(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+    if (user == null) {
+      showAuthErrorDialog(context);
+    }
     setState(() {
       _isLoading = false;
     });
@@ -112,6 +117,7 @@ class _SignUpState extends State<SignUp> {
                               }
                               return null;
                             },
+                            textInputAction: TextInputAction.next,
                             controller: _emailController,
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
