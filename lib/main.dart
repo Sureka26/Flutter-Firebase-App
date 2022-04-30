@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/home_page.dart';
+import 'package:flutter_auth_app/loading.dart';
 import 'package:flutter_auth_app/login.dart';
 import 'package:flutter_auth_app/main_page.dart';
 import 'package:flutter_auth_app/sign_up.dart';
@@ -20,9 +21,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: MainPage(),
     );
   }
