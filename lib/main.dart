@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/home_page.dart';
+import 'package:flutter_auth_app/src/onboarding/onboarding_screen.dart';
 import 'package:flutter_auth_app/src/utils/screens/loading.dart';
 import 'package:flutter_auth_app/src/authentication/screens/login.dart';
 import 'package:flutter_auth_app/main_page.dart';
