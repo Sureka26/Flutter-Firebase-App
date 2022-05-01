@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/src/userdata/network/user_data_firestore.dart';
+import 'package:flutter_auth_app/src/userdata/screens/add_data_screen.dart';
 
 class UserDataScreen extends StatefulWidget {
   const UserDataScreen({Key? key}) : super(key: key);
@@ -13,30 +14,29 @@ class _UserDataScreenState extends State<UserDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff001d3d),
-      body: Container(
-          child: StreamBuilder(
-        stream: UserDataFirestore.getUserDataStream(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final userData = snapshot.data;
-            print(userData);
-            return const Text(
-              'User Data available',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            );
-          } else {
-            return const Text(
-              'No Data available',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            );
-          }
-          return Container();
-        },
-      )),
+      body: Center(
+        child: MaterialButton(
+          onPressed: () => _showBottonForm(),
+          child: const Text('Add Data'),
+          color: Colors.blue.shade200,
+          elevation: 5.0,
+        ),
+      ),
+    );
+  }
+
+  _showBottonForm() {
+    return showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+      ),
+      context: context,
+      builder: (context) {
+        return AddDataScreen();
+      },
     );
   }
 }
