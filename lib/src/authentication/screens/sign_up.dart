@@ -55,8 +55,12 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  bool showConfirmPassword = true;
+  bool showPassword = true;
+
   @override
   Widget build(BuildContext context) {
+    //bool _obscureText = true;
     return _isLoading
         ? const Loading()
         : GestureDetector(
@@ -161,7 +165,7 @@ class _SignUpState extends State<SignUp> {
                             height: 20.0,
                           ),
                           TextFormField(
-                            obscureText: true,
+                            obscureText: showPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter a password';
@@ -175,6 +179,22 @@ class _SignUpState extends State<SignUp> {
                             controller: _passwordController,
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: showPassword == true
+                                    ? Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.grey[700],
+                                      )
+                                    : Icon(
+                                        Icons.visibility,
+                                        color: Colors.grey[700],
+                                      ),
+                                onPressed: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                },
+                              ),
                               errorStyle:
                                   TextStyle(color: Colors.redAccent.shade200),
                               contentPadding: const EdgeInsets.all(8.0),
@@ -201,7 +221,7 @@ class _SignUpState extends State<SignUp> {
                             height: 20.0,
                           ),
                           TextFormField(
-                            obscureText: true,
+                            obscureText: showConfirmPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter a password again';
@@ -215,6 +235,22 @@ class _SignUpState extends State<SignUp> {
                             controller: _confirmPassword,
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: showConfirmPassword == true
+                                    ? Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.grey[700],
+                                      )
+                                    : Icon(
+                                        Icons.visibility,
+                                        color: Colors.grey[700],
+                                      ),
+                                onPressed: () {
+                                  setState(() {
+                                    showConfirmPassword = !showConfirmPassword;
+                                  });
+                                },
+                              ),
                               errorStyle:
                                   TextStyle(color: Colors.redAccent.shade200),
                               contentPadding: const EdgeInsets.all(8.0),
