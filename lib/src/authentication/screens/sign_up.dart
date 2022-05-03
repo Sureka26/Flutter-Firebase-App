@@ -17,27 +17,41 @@ class _SignUpState extends State<SignUp> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
+  final _confirmPassword = TextEditingController();
 
   void signUpUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    User? user = await AuthFirebase.createUser(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-    if (user == null) {
-      showAuthErrorDialog(context);
+    if (passwordConfirmed()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      User? user = await AuthFirebase.createUser(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      if (user == null) {
+        showAuthErrorDialog(context);
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
     }
-    setState(() {
-      _isLoading = false;
-    });
+  }
+
+  bool passwordConfirmed() {
+    if (_passwordController.text == _confirmPassword.text) {
+      return true;
+    } else {
+      return showAuthErrorDialog(context);
+    }
   }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPassword.dispose();
     super.dispose();
   }
 
@@ -147,6 +161,7 @@ class _SignUpState extends State<SignUp> {
                             height: 20.0,
                           ),
                           TextFormField(
+                            obscureText: true,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter a password';
@@ -164,6 +179,46 @@ class _SignUpState extends State<SignUp> {
                                   TextStyle(color: Colors.redAccent.shade200),
                               contentPadding: const EdgeInsets.all(8.0),
                               hintText: 'Enter password',
+                              hintStyle: const TextStyle(fontSize: 14.0),
+                              fillColor: Colors.white,
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                  color: Colors.redAccent.shade100,
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter a password again';
+                              } else if (value.length < 6) {
+                                return 'Password enter a correct password';
+                              } else {
+                                print('password validated - is Not empty');
+                              }
+                              return null;
+                            },
+                            controller: _confirmPassword,
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              errorStyle:
+                                  TextStyle(color: Colors.redAccent.shade200),
+                              contentPadding: const EdgeInsets.all(8.0),
+                              hintText: 'Confirm password',
                               hintStyle: const TextStyle(fontSize: 14.0),
                               fillColor: Colors.white,
                               filled: true,
