@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/src/authentication/network/auth_firebase.dart';
+import 'package:flutter_auth_app/src/authentication/screens/forgot_pwd.dart';
 import 'package:flutter_auth_app/src/utils/function_utils.dart';
 import 'package:flutter_auth_app/src/utils/screens/loading.dart';
 import 'package:flutter_auth_app/src/authentication/screens/sign_up.dart';
@@ -30,8 +31,8 @@ class _LoginState extends State<Login> {
     });
 
     User? user = await AuthFirebase.loginUser(
-      email: _emailController.text,
-      password: _passwordController.text,
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
     );
     if (user == null) {
       showAuthErrorDialog(context);
@@ -47,6 +48,8 @@ class _LoginState extends State<Login> {
     _passwordController.dispose();
     super.dispose();
   }
+
+  bool showPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +165,25 @@ class _LoginState extends State<Login> {
                               }
                             },
                             controller: _passwordController,
+                            obscureText: showPassword,
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: showPassword == true
+                                    ? Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.grey[700],
+                                      )
+                                    : Icon(
+                                        Icons.visibility,
+                                        color: Colors.grey[700],
+                                      ),
+                                onPressed: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                },
+                              ),
                               contentPadding: const EdgeInsets.all(8.0),
                               hintText: 'Enter password',
                               hintStyle: const TextStyle(fontSize: 14.0),
@@ -182,6 +202,34 @@ class _LoginState extends State<Login> {
                                   width: 2.0,
                                 ),
                               ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return ForgotPasswordPage();
+                                    }));
+                                  },
+                                  child: Text(
+                                    'Forgot password',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15.0,
+                                      color: Colors.blue.shade600,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(
